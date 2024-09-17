@@ -70,6 +70,5 @@ return {
 				})
 			end,
 		})
-    }
 	end,
 }
