@@ -1,7 +1,8 @@
 local opt = vim.opt
 
-vim.cmd [[
+vim.cmd[[
   syntax enable
+  setlocal spell spelllang=en_us
 ]]
 
 opt.number = true
@@ -22,7 +23,7 @@ opt.smartcase = true
 opt.incsearch = true
 opt.hlsearch = false
 
-opt.wildmode = "longest,list" 
+opt.wildmode = "longest,list"
 opt.backspace = "indent,eol,start"
 
 opt.clipboard:append("unnamedplus")

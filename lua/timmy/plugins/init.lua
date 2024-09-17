@@ -1,5 +1,5 @@
 return {
   "nvim-lua/plenary.nvim",
   "christoomey/vim-tmux-navigator",
-  "sitiom/nvim-numbertoggle"
+  "sitiom/nvim-numbertoggle",
 }
