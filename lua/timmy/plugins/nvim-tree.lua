@@ -47,6 +47,7 @@ return {
 
      local keymap = vim.keymap
 
+     keymap.set("n", "<leader>es", "<C-w>w", { desc = "Switch between file explorer" })
      keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
      keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer current" })
      keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" })
