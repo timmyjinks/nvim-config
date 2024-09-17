@@ -70,14 +70,6 @@ return {
 				})
 			end,
 		})
-
-    require'lspconfig'.html.setup {
-      capabilities = capabilities,
-      filetypes = {
-        "html",
-        "templ",
-        "pug",
-      },
     }
 	end,
 }
