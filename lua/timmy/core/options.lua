@@ -1,9 +1,9 @@
 local opt = vim.opt
 
-vim.cmd([[
+vim.cmd[[
   syntax enable
   setlocal spell spelllang=en_us
-]])
+]]
 
 opt.number = true
 opt.relativenumber = true
