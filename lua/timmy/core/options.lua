@@ -1,9 +1,9 @@
 local opt = vim.opt
 
-vim.cmd[[
+vim.cmd([[
   syntax enable
   setlocal spell spelllang=en_us
-]]
+]])
 
 opt.number = true
 opt.relativenumber = true
@@ -17,7 +17,6 @@ opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
 opt.wrap = false
-
 opt.ignorecase = true
 opt.smartcase = true
 opt.incsearch = true
