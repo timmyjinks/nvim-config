@@ -8,6 +8,70 @@ return {
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
+		vim.cmd([[autocmd BufRead,BufNewFile *.grz setfiletype grz]])
+		require("lspconfig.configs").grezi = {
+			default_config = {
+				cmd = { "grezi", "--lsp" },
+				filetypes = { "grz" },
+				on_init = function(client, _)
+					client.server_capabilities.semanticTokensProvider = nil -- turn off semantic tokens
+					vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
+					vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
+					vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
+					vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
+				end,
+				on_attach = function(client, bufnr)
+					local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+					if client.supports_method("textDocument/formatting") then
+						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							group = augroup,
+							buffer = bufnr,
+							callback = function()
+								vim.lsp.buf.format()
+							end,
+						})
+					end
+				end,
+				single_file_support = true,
+			},
+		}
+		lspconfig.grezi.setup({})
+		vim.lsp.inlay_hint.enable()
+
+		require("nvim-treesitter.configs").setup({
+			highlight = {
+				enable = true,
+			},
+			indent = {
+				enable = true,
+			},
+		})
+		local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+		parser_config.grz = {
+			install_info = {
+				url = "~/Downloads/grezi-next/tree-sitter-grz", -- local path or git repo
+				files = { "src/parser.c", "src/scanner.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
+				-- optional entries:
+				branch = "nvim", -- default branch in case of git repo if different from master
+				generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+				requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+			},
+			filetype = "grz", -- if filetype does not match the parser name
+		}
+		parser_config.djot = {
+			install_info = {
+				url = "https://github.com/treeman/tree-sitter-djot", -- local path or git repo
+				files = { "src/parser.c", "src/scanner.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
+				-- optional entries:
+				branch = "master", -- default branch in case of git repo if different from master
+				generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+				requires_generate_from_grammar = true, -- if folder contains pre-generated src/parser.c
+			},
+			filetype = "dj", -- if filetype does not match the parser name
+		}
+		vim.treesitter.language.register("grz", "grz")
+
 		local mason_lspconfig = require("mason-lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
