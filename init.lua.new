@@ -123,6 +123,13 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.pack.add({ { src = "https://github.com/catppuccin/nvim", name = "catppuccin" } })
 vim.cmd.colorscheme("catppuccin")
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
+})
+
+
 -- INFO: plugins
 -- we install plugins with neovim's builtin package manager: vim.pack
 -- and then enable/configure them by calling their setup functions.
@@ -151,8 +158,9 @@ require("nvim-treesitter").setup({
 -- INFO: completion engine
 vim.pack.add({ "https://github.com/saghen/blink.lib" }, { confirm = false })
 vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
+local cmp = require("blink.cmp")
 
-require("blink.cmp").setup({
+cmp.setup({
 	-- default blink keymaps
 	keymap = {
 		["<C-Tab>"] = { "select_prev", "fallback_to_mappings" },
@@ -171,32 +179,33 @@ require("blink.cmp").setup({
 		["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
 	},
 	completion = {
+    keyword = {
+      range = 'prefix',
+    },
 		documentation = {
 			auto_show = true,
 		},
 		trigger = {
+      show_on_insert = false,
+      show_on_backspace = false,
 			prefetch_on_insert = true,
+      show_on_accept_on_trigger_character = true,
+      show_on_keyword = true,
+      show_on_trigger_character = true,
 			show_on_insert_on_trigger_character = true,
 			show_on_blocked_trigger_characters = {},
 		},
+    menu = {
+      auto_show = true,
+    },
 	},
 
 	sources = {
-		providers = {
-			lsp = {
-				override = {
-					get_trigger_characters = function(self)
-						local chars = self:get_trigger_characters()
-						vim.list_extend(chars, { "\n", "\t", " " })
-						return chars
-					end,
-				},
-			},
-		},
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
 	},
 
 	fuzzy = {
-		implementation = "lua",
+    implementation = 'prefer_rust_with_warning',
 	},
 })
 
@@ -276,6 +285,8 @@ require("which-key").setup({
 		{ "<leader>s", group = "[S]earch", icon = { icon = "", color = "green" } },
 	},
 })
+
+
 
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
