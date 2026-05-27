@@ -303,3 +303,14 @@ require("autoclose").setup()
 
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
+-- INFO: nvim file explorer
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+vim.opt.termguicolors = true
+
+vim.pack.add({ "https://github.com/nvim-tree/nvim-tree.lua" }, { confirm = false })
+vim.keymap.set("n", "<leader>ef", ":NvimTreeToggle<CR>", { desc = "Toggle explorer open/close" })
+vim.keymap.set("n", "<leader>es", "<C-w>p", { desc = "Toggle explorer open/close" })
+
+require("nvim-tree").setup()
