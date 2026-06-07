@@ -1,5 +1,5 @@
 # Intro
-This config is built for Linux systems in mind so installation instructions will only be about Linux as that is the main operating system I work on. However you can still get the configto work but dependencies will be installed differently and I do plan I adding install instructions on other operating systems. 
+This config is built for Linux and Mac systems in mind so installation instructions and the script will only be for those systems.
 
 # Plugins
 - nvim-tree
