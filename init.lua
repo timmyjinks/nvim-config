@@ -122,6 +122,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- INFO: colorscheme
 vim.pack.add({ { src = "https://github.com/catppuccin/nvim", name = "catppuccin" } })
 vim.cmd.colorscheme("catppuccin")
+vim.api.nvim_set_hl(0, "SnippetTabstopActive", {})
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function()
@@ -311,6 +312,10 @@ vim.opt.termguicolors = true
 
 vim.pack.add({ "https://github.com/nvim-tree/nvim-tree.lua" }, { confirm = false })
 vim.keymap.set("n", "<leader>ef", ":NvimTreeToggle<CR>", { desc = "Toggle explorer open/close" })
-vim.keymap.set("n", "<leader>es", "<C-w>p", { desc = "Toggle explorer open/close" })
+vim.keymap.set("n", "<leader>es", "<C-w>w", { desc = "Switch between explorer and file editor" })
 
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+	git = {
+		ignore = false,
+	},
+})
