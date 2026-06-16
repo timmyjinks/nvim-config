@@ -14,7 +14,7 @@ minimal single file config for my nvim workflow
 
 ### Dependencies
 This config has some plugins like the lsp and fuzzy finder that require some dependencies to run:
-- neovim>=v11.0
+- neovim>=v12.0
 - rust tooling 
 - ripgrep
   
