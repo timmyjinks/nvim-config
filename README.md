@@ -1,5 +1,5 @@
 # Intro
-This config is built for Linux and Mac systems in mind so installation instructions and the script will only be for those systems.
+minimal single file config for my nvim workflow
 
 # Plugins
 - nvim-tree
